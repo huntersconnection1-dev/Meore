@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MEORE — Georgia Investment</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080808;--bg2:#0E0E0E;--bg3:#141414;
+  --line:rgba(255,255,255,0.06);
+  --gold:#C9A96E;--gold2:#E8C98A;
+  --white:#F4F1EC;--muted:rgba(244,241,236,0.38);--muted2:rgba(244,241,236,0.16);
+  --good:#6FCF97;--bad:#EB5757;--ok:#F2C94C;
+}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{background:var(--bg);color:var(--white);font-family:'Inter',sans-serif;font-weight:300;line-height:1.6;overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 56px;background:rgba(8,8,8,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--line);transition:background .3s}
+.nav-logo{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;letter-spacing:7px;color:var(--white);text-decoration:none}
+.nav-logo span{color:var(--gold)}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;font-weight:500}
+.nav-links a:hover{color:var(--white)}
+.nav-cta{font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:10px 28px;border:1px solid var(--gold);color:var(--gold);background:transparent;cursor:pointer;transition:all .2s;font-family:'Inter',sans-serif;font-weight:500}
+.nav-cta:hover{background:var(--gold);color:var(--bg)}
+.burger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+.burger span{display:block;width:22px;height:1px;background:var(--white);transition:all .3s}
+.burger.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.burger.open span:nth-child(2){opacity:0}
+.burger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+.mobile-menu{display:none;position:fixed;inset:72px 0 0 0;z-index:999;background:var(--bg);flex-direction:column;align-items:center;justify-content:center;gap:36px}
+.mobile-menu.open{display:flex}
+.mobile-menu a{font-family:'Syne',sans-serif;font-size:26px;font-weight:700;color:var(--muted);text-decoration:none;letter-spacing:2px;transition:color .2s}
+.mobile-menu a:hover{color:var(--white)}
+
+/* HERO */
+#hero{min-height:100vh;display:grid;grid-template-rows:1fr auto;position:relative;overflow:hidden;padding-top:72px}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:72px 72px;mask-image:radial-gradient(ellipse 80% 80% at 50% 40%,black 40%,transparent 100%)}
+.hero-glow{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(201,169,110,0.06) 0%,transparent 70%);top:40%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+.hero-inner{display:flex;flex-direction:column;justify-content:center;padding:0 80px;position:relative;z-index:1}
+.hero-eyebrow{font-size:10px;letter-spacing:5px;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:44px;opacity:0;animation:up .6s .2s forwards}
+.hero-h1{font-family:'Syne',sans-serif;font-size:clamp(56px,10vw,128px);font-weight:800;line-height:.92;letter-spacing:-4px;opacity:0;animation:up .8s .35s forwards}
+.hero-h1 .hollow{display:block;color:transparent;-webkit-text-stroke:1px rgba(244,241,236,0.2)}
+.hero-h1 .gold{color:var(--gold)}
+.hero-line{width:0;height:1px;background:var(--gold);margin:48px 0;opacity:0;animation:widen .7s .85s forwards}
+.hero-sub{max-width:500px;font-size:16px;color:rgba(244,241,236,0.55);line-height:1.85;opacity:0;animation:up .7s 1.05s forwards}
+.hero-btns{display:flex;gap:14px;margin-top:48px;opacity:0;animation:up .6s 1.25s forwards}
+.btn-p{padding:15px 40px;background:var(--gold);color:var(--bg);font-size:10px;letter-spacing:2.5px;text-transform:uppercase;font-family:'Inter',sans-serif;font-weight:600;border:none;cursor:pointer;transition:opacity .2s}
+.btn-p:hover{opacity:.8}
+.btn-o{padding:15px 40px;background:transparent;color:var(--white);font-size:10px;letter-spacing:2.5px;text-transform:uppercase;font-family:'Inter',sans-serif;font-weight:500;border:1px solid var(--line);cursor:pointer;transition:border-color .2s,color .2s}
+.btn-o:hover{border-color:var(--gold);color:var(--gold)}
+.hero-stats{display:flex;border-top:1px solid var(--line);position:relative;z-index:1}
+.hero-stat{flex:1;padding:36px 56px;border-right:1px solid var(--line)}
+.hero-stat:last-child{border-right:none}
+.stat-val{font-family:'Syne',sans-serif;font-size:38px;font-weight:800;color:var(--white);letter-spacing:-1px;line-height:1}
+.stat-val span{color:var(--gold);font-size:.7em}
+.stat-label{font-size:10px;letter-spacing:1.5px;color:var(--muted);margin-top:8px;text-transform:uppercase}
+
+/* SECTIONS */
+section{padding:120px 0}
+.container{max-width:1200px;margin:0 auto;padding:0 80px}
+.s-label{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:16px;display:flex;align-items:center;gap:14px}
+.s-label::before{content:'';display:block;width:28px;height:1px;background:var(--gold)}
+.s-title{font-family:'Syne',sans-serif;font-size:clamp(30px,4vw,52px);font-weight:700;line-height:1.05;letter-spacing:-1.5px}
+.s-title em{font-style:normal;color:var(--gold)}
+.s-sub{font-size:14px;color:var(--muted);line-height:1.85;max-width:520px;margin-top:18px}
+.hdiv{height:1px;background:var(--line)}
+
+/* GEORGIA */
+#georgia{background:var(--bg2)}
+.why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);margin-top:60px}
+.why-card{background:var(--bg2);padding:48px 32px;transition:background .3s;cursor:default}
+.why-card:hover{background:var(--bg3)}
+.why-tag{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:28px;font-family:'Syne',sans-serif}
+.why-title{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;color:var(--white);margin-bottom:12px;line-height:1.2}
+.why-text{font-size:12px;color:var(--muted);line-height:1.85}
+.why-stat{margin-top:28px;padding-top:20px;border-top:1px solid var(--line);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600}
+
+/* TOUR */
+#tour{background:var(--bg)}
+.tour-layout{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;margin-top:60px}
+.tour-quote{font-family:'Syne',sans-serif;font-size:clamp(20px,2.2vw,28px);font-weight:600;line-height:1.35;color:var(--white);border-left:2px solid var(--gold);padding-left:28px;margin-bottom:32px;letter-spacing:-.3px}
+.tour-body{font-size:13px;color:var(--muted);line-height:1.9}
+.tour-steps{display:flex;flex-direction:column;gap:2px}
+.tour-step{display:grid;grid-template-columns:56px 1fr;gap:0;background:var(--bg2);border:1px solid var(--line);transition:border-color .25s;cursor:default}
+.tour-step:hover{border-color:rgba(201,169,110,.4)}
+.step-idx{display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:var(--gold);border-right:1px solid var(--line)}
+.step-cnt{padding:22px 26px}
+.step-name{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--white);margin-bottom:5px}
+.step-desc{font-size:11px;color:var(--muted);line-height:1.7}
+
+/* SERVICES */
+#services{background:var(--bg2)}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);margin-top:60px}
+.svc-item{background:var(--bg2);padding:44px 36px;border-top:2px solid transparent;transition:border-color .25s,background .25s;cursor:default}
+.svc-item:hover{border-top-color:var(--gold);background:var(--bg3)}
+.svc-num{font-size:9px;letter-spacing:3px;color:var(--muted2);font-weight:600;margin-bottom:22px;font-family:'Syne',sans-serif}
+.svc-name{font-family:'Syne',sans-serif;font-size:19px;font-weight:700;color:var(--white);margin-bottom:12px;letter-spacing:-.2px}
+.svc-desc{font-size:12px;color:var(--muted);line-height:1.85}
+.svc-tag{display:inline-block;margin-top:22px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);font-weight:600;border:1px solid rgba(201,169,110,.22);padding:5px 12px}
+
+/* DEEP */
+#deep{background:var(--bg)}
+.deep-layout{display:grid;grid-template-columns:1fr 2fr;gap:80px;align-items:start;margin-top:60px}
+.deep-lead{font-size:14px;color:var(--muted);line-height:1.9;margin-top:20px}
+.deep-blocks{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line)}
+.d-block{background:var(--bg);padding:36px 30px;transition:background .25s}
+.d-block:hover{background:var(--bg3)}
+.d-block.span2{grid-column:1/-1;background:rgba(201,169,110,.04)}
+.d-block-tag{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:12px}
+.d-block-title{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:var(--white);margin-bottom:18px}
+.d-list{list-style:none;display:flex;flex-direction:column;gap:9px}
+.d-list li{font-size:12px;color:var(--muted);display:flex;gap:10px;line-height:1.6}
+.d-list li::before{content:'—';color:var(--gold);flex-shrink:0;font-size:11px}
+
+/* COMPARE */
+#compare{background:var(--bg2)}
+.compare-note{font-size:13px;color:var(--muted);max-width:560px;line-height:1.8;margin-top:18px;margin-bottom:56px}
+.country-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--line);margin-bottom:2px}
+.cc{background:var(--bg2);padding:32px 24px;transition:background .25s}
+.cc:hover{background:var(--bg3)}
+.cc.geo{background:rgba(201,169,110,.05);border-top:2px solid var(--gold)}
+.cc-badge{font-size:8px;letter-spacing:2px;text-transform:uppercase;background:var(--gold);color:var(--bg);padding:4px 10px;font-weight:700;display:inline-block;margin-bottom:14px}
+.cc-name{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--white);margin-bottom:18px}
+.cc-section{font-size:9px;letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:7px}
+.cc-section.pl{color:var(--good)}
+.cc-section.mn{color:var(--bad)}
+.cc-list{list-style:none;margin-bottom:14px}
+.cc-list li{font-size:10px;color:var(--muted);padding:4px 0;border-bottom:1px solid var(--line);display:flex;gap:7px;line-height:1.5}
+.cc-list li:last-child{border-bottom:none}
+.cc-list.pl li::before{content:'+';color:var(--good);flex-shrink:0;font-weight:700;font-size:10px}
+.cc-list.mn li::before{content:'−';color:var(--bad);flex-shrink:0;font-weight:700}
+.cc.geo .cc-list li{color:rgba(244,241,236,.65)}
+.ctable-wrap{overflow-x:auto;margin-top:2px}
+.ctable{width:100%;border-collapse:collapse;background:var(--bg2)}
+.ctable th{padding:15px 18px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:600;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+.ctable th.hl{color:var(--gold);border-bottom-color:var(--gold)}
+.ctable td{padding:16px 18px;font-size:11px;color:var(--muted);border-bottom:1px solid var(--line);vertical-align:top;line-height:1.5}
+.ctable td:first-child{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted2);font-weight:600;white-space:nowrap}
+.ctable td.hl{color:var(--white);background:rgba(201,169,110,.04)}
+.ctable tr:last-child td{border-bottom:none}
+.good{color:var(--good);font-weight:500}
+.bad{color:var(--bad)}
+.ok{color:var(--ok)}
+
+/* RESULT */
+#result{background:var(--bg)}
+.result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);margin-top:60px}
+.r-node{background:var(--bg);padding:56px 44px;transition:background .25s;cursor:default}
+.r-node:hover{background:var(--bg3)}
+.r-num{font-family:'Syne',sans-serif;font-size:72px;font-weight:800;color:rgba(201,169,110,.1);line-height:1;margin-bottom:20px;letter-spacing:-4px}
+.r-title{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--white);margin-bottom:12px;letter-spacing:1px;text-transform:uppercase}
+.r-text{font-size:12px;color:var(--muted);line-height:1.8}
+
+/* CTA */
+#cta{background:var(--bg2);position:relative;overflow:hidden}
+#cta::before{content:'MEORE';position:absolute;font-family:'Syne',sans-serif;font-size:clamp(100px,18vw,240px);font-weight:800;color:rgba(255,255,255,.018);letter-spacing:-8px;top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;pointer-events:none}
+.cta-inner{text-align:center;position:relative;z-index:1}
+.cta-tag{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:28px}
+.cta-h{font-family:'Syne',sans-serif;font-size:clamp(28px,5vw,58px);font-weight:700;line-height:1.1;letter-spacing:-2px;margin-bottom:20px}
+.cta-h em{font-style:normal;color:var(--gold)}
+.cta-sub{font-size:14px;color:var(--muted);max-width:440px;margin:0 auto 44px;line-height:1.85}
+.cta-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+
+/* FOOTER */
+footer{padding:40px 80px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}
+.f-logo{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;letter-spacing:6px;color:var(--white)}
+.f-logo span{color:var(--gold)}
+.f-copy{font-size:10px;color:var(--muted2);letter-spacing:1px}
+
+/* SLOGAN STRIP */
+.slogan-strip{
+  position:relative;
+  background:var(--bg);
+  border-top:1px solid rgba(201,169,110,0.35);
+  border-bottom:1px solid var(--line);
+  padding:40px 80px;
+  display:grid;
+  grid-template-columns:1fr auto;
+  align-items:end;
+  gap:40px;
+  overflow:hidden;
+}
+.slogan-strip::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  opacity:.5;
+}
+.slogan-geo{
+  font-family:'Inter',sans-serif;
+  font-size:clamp(11px,1.2vw,14px);
+  font-weight:300;
+  letter-spacing:5px;
+  text-transform:uppercase;
+  color:rgba(244,241,236,0.45);
+  line-height:1.9;
+}
+.slogan-geo strong{
+  display:block;
+  font-size:clamp(13px,1.4vw,16px);
+  letter-spacing:6px;
+  color:rgba(244,241,236,0.6);
+  font-weight:300;
+}
+.slogan-conf{
+  font-size:10px;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  color:rgba(201,169,110,0.5);
+  font-weight:500;
+  white-space:nowrap;
+  align-self:flex-end;
+  padding-bottom:2px;
+}
+@media(max-width:768px){
+  .slogan-strip{grid-template-columns:1fr;gap:20px;padding:32px 24px}
+  .slogan-conf{align-self:auto}
+}
+
+/* ANIMATIONS */
+@keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes widen{from{opacity:0;width:0}to{opacity:1;width:72px}}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .container{padding:0 40px}
+  .hero-inner{padding:0 40px}
+  .why-grid{grid-template-columns:repeat(2,1fr)}
+  .country-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:768px){
+  nav{padding:0 24px}
+  .nav-links,.nav-cta{display:none}
+  .burger{display:flex}
+  .hero-inner{padding:0 24px}
+  .container{padding:0 24px}
+  section{padding:80px 0}
+  .hero-stats{flex-direction:column}
+  .hero-stat{border-right:none;border-bottom:1px solid var(--line);padding:28px 24px}
+  .tour-layout,.deep-layout{grid-template-columns:1fr}
+  .why-grid,.svc-grid,.result-grid{grid-template-columns:1fr}
+  .deep-blocks{grid-template-columns:1fr}
+  .d-block.span2{grid-column:auto}
+  .country-grid{grid-template-columns:1fr 1fr}
+  footer{flex-direction:column;gap:12px;text-align:center;padding:32px 24px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#hero" class="nav-logo">ME<span>ORE</span></a>
+  <ul class="nav-links">
+    <li><a href="#georgia">Грузия</a></li>
+    <li><a href="#tour">Тур</a></li>
+    <li><a href="#services">Услуги</a></li>
+    <li><a href="#compare">Сравнение</a></li>
+    <li><a href="#result">Результат</a></li>
+  </ul>
+  <button class="nav-cta" onclick="scroll2('cta')">Связаться</button>
+  <button class="burger" id="burger"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="mobile-menu" id="mob">
+  <a href="#georgia" onclick="closeM()">Грузия</a>
+  <a href="#tour"    onclick="closeM()">Тур</a>
+  <a href="#services"onclick="closeM()">Услуги</a>
+  <a href="#compare" onclick="closeM()">Сравнение</a>
+  <a href="#result"  onclick="closeM()">Результат</a>
+  <a href="#cta"     onclick="closeM()">Связаться</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">მეორე · Инвестиционная компания · Грузия · 2026</div>
+    <h1 class="hero-h1">
+      <span class="gold">MEORE</span><br>
+      <span class="hollow">ВТОРОЙ ДОМ,</span><br>
+      <span class="hollow">КОТОРЫЙ СТАНОВИТСЯ ПЕРВЫМ.</span>
+    </h1>
+    <div class="hero-line"></div>
+    <p class="hero-sub">Недвижимость, капитал, ВНЖ и релокация в Грузию — через одну дверь и одного партнёра с реальными связями на рынке.</p>
+    <div class="hero-btns">
+      <button class="btn-p" onclick="scroll2('tour')">Инвестиционный тур</button>
+      <button class="btn-o" onclick="scroll2('georgia')">Почему Грузия</button>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="stat-val">0<span>%</span></div>
+      <div class="stat-label">Налог на иностранный доход</div>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-val">1<span> день</span></div>
+      <div class="stat-label">Открытие компании</div>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-val">12<span>%</span></div>
+      <div class="stat-label">Арендная доходность</div>
+    </div>
+    <div class="hero-stat">
+      <div class="stat-val">$50<span>k</span></div>
+      <div class="stat-label">Порог входа в рынок</div>
+    </div>
+  </div>
+</section>
+
+<!-- SLOGAN STRIP -->
+<div class="slogan-strip">
+  <div class="slogan-geo">
+    <strong>მეორე · ВТОРОЙ ДОМ, КОТОРЫЙ СТАНОВИТСЯ ПЕРВЫМ</strong>
+    Недвижимость · Капитал · ВНЖ · Релокация · Грузия
+  </div>
+  <div class="slogan-conf">Конфиденциально</div>
+</div>
+
+<!-- ПОЧЕМУ ГРУЗИЯ -->
+<section id="georgia">
+  <div class="container">
+    <div class="s-label">01 — Архитектура привлекательности</div>
+    <h2 class="s-title">Почему именно <em>Грузия</em></h2>
+    <p class="s-sub">Страна в активной фазе роста — с прозрачными правилами, низкими налогами и органической средой для жизни.</p>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-tag">01 / Геополитика</div>
+        <div class="why-title">Стратегическое положение</div>
+        <p class="why-text">На пересечении Европы и Ближнего Востока. Устойчивый поток капитала и релокантов формирует фундаментальный спрос на недвижимость.</p>
+        <div class="why-stat">Топ-25 безопасных стран мира</div>
+      </div>
+      <div class="why-card">
+        <div class="why-tag">02 / Налоги</div>
+        <div class="why-title">Территориальная система</div>
+        <p class="why-text">Доход из-за рубежа не облагается налогом. Аренда — от 5%. Нет ежегодного налога на владение недвижимостью.</p>
+        <div class="why-stat">0% на иностранный доход</div>
+      </div>
+      <div class="why-card">
+        <div class="why-tag">03 / Рынок</div>
+        <div class="why-title">Активная фаза роста</div>
+        <p class="why-text">Появление премиальных проектов, рост туристического потока, высокая арендная доходность в центральных районах Тбилиси и Батуми.</p>
+        <div class="why-stat">До 12% годовых — аренда</div>
+      </div>
+      <div class="why-card">
+        <div class="why-tag">04 / Среда</div>
+        <div class="why-title">Качество жизни</div>
+        <p class="why-text">4 сезона, горы и море в трёх часах. Чистый воздух, натуральная еда, безопасные улицы. Мировой гастрономический тренд.</p>
+        <div class="why-stat">Горы и море в одной стране</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ИНВЕСТИЦИОННЫЙ ТУР -->
+<div class="hdiv"></div>
+<section id="tour">
+  <div class="container">
+    <div class="s-label">02 — Флагманский продукт</div>
+    <h2 class="s-title">Инвестиционный <em>тур</em></h2>
+    <div class="tour-layout">
+      <div>
+        <p class="tour-quote">Мы не продаём страну по каталогу. Мы приглашаем вас приехать и увидеть всё своими глазами.</p>
+        <p class="tour-body">Если вы хотите исследовать Грузию по-настоящему — мы откроем её так, как не откроет ни один агент. Лучшие инвестиционные локации, живые встречи с теми, кто строит рынок, и персональная дорожная карта на выходе.<br><br>Мы показываем страну со всех сторон: районы для жизни, объекты с потенциалом, юридическую реальность и возможности, которые не публикуются в открытом доступе.</p>
+      </div>
+      <div class="tour-steps">
+        <div class="tour-step">
+          <div class="step-idx">I</div>
+          <div class="step-cnt">
+            <div class="step-name">Прилёт и погружение</div>
+            <p class="step-desc">Встреча, первый контакт с городом. С первых часов — ощущение лёгкости и правильного выбора.</p>
+          </div>
+        </div>
+        <div class="tour-step">
+          <div class="step-idx">II</div>
+          <div class="step-cnt">
+            <div class="step-name">Исследование рынка</div>
+            <p class="step-desc">Районы, объекты, закрытые локации — показываем инвестиционный потенциал изнутри, без прикрас.</p>
+          </div>
+        </div>
+        <div class="tour-step">
+          <div class="step-idx">III</div>
+          <div class="step-cnt">
+            <div class="step-name">День капитала</div>
+            <p class="step-desc">Встречи с девелоперами, юристами, банкирами. ВНЖ, счёт, компания — всё становится понятным.</p>
+          </div>
+        </div>
+        <div class="tour-step">
+          <div class="step-idx">IV</div>
+          <div class="step-cnt">
+            <div class="step-name">Дорожная карта</div>
+            <p class="step-desc">Уезжаете с персональным планом, нужными контактами и ясным ответом: подходит страна или нет.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- УСЛУГИ -->
+<div class="hdiv"></div>
+<section id="services">
+  <div class="container">
+    <div class="s-label">03 — Полная экосистема</div>
+    <h2 class="s-title">Шесть направлений.<br><em>Один партнёр.</em></h2>
+    <div class="svc-grid">
+      <div class="svc-item">
+        <div class="svc-num">01</div>
+        <div class="svc-name">Инвестиционный тур</div>
+        <p class="svc-desc">Приезжаете и исследуете страну лично. Закрытые объекты, встречи с рынком, программа под ваш запрос.</p>
+        <div class="svc-tag">Флагман</div>
+      </div>
+      <div class="svc-item">
+        <div class="svc-num">02</div>
+        <div class="svc-name">Недвижимость</div>
+        <p class="svc-desc">Первичный и вторичный рынок, земля, коммерция. Только объекты с юридически чистой историей.</p>
+        <div class="svc-tag">От $50k</div>
+      </div>
+      <div class="svc-item">
+        <div class="svc-num">03</div>
+        <div class="svc-name">ВНЖ и статус</div>
+        <p class="svc-desc">Вид на жительство через инвестиции, бизнес или иные основания. Полное юридическое сопровождение.</p>
+        <div class="svc-tag">От $100k</div>
+      </div>
+      <div class="svc-item">
+        <div class="svc-num">04</div>
+        <div class="svc-name">Банк и бизнес</div>
+        <p class="svc-desc">Открытие счетов в грузинских банках, регистрация компании за 1 день, налоговое резидентство.</p>
+        <div class="svc-tag">1 день</div>
+      </div>
+      <div class="svc-item">
+        <div class="svc-num">05</div>
+        <div class="svc-name">Релокация</div>
+        <p class="svc-desc">Переезд семьи под ключ: школы, районы, врачи, быт. Вы просто живёте — мы решаем остальное.</p>
+        <div class="svc-tag">Под ключ</div>
+      </div>
+      <div class="svc-item">
+        <div class="svc-num">06</div>
+        <div class="svc-name">Связи и нетворкинг</div>
+        <p class="svc-desc">Доступ к закрытым объектам и ключевым людям рынка. То, что невозможно найти самостоятельно.</p>
+        <div class="svc-tag">Эксклюзив</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ЧТО ВХОДИТ В ТУР -->
+<div class="hdiv"></div>
+<section id="deep">
+  <div class="container">
+    <div class="s-label">04 — Внутри тура</div>
+    <h2 class="s-title">Страна <em>со всех сторон</em></h2>
+    <div class="deep-layout">
+      <div>
+        <p class="s-sub">Три блока внутри каждого тура — во время и после.</p>
+        <p class="deep-lead">Мы не исчезаем после тура. Каждый клиент получает персонального менеджера и сопровождение на всех этапах — от первого разговора до ключа в руке.</p>
+      </div>
+      <div class="deep-blocks">
+        <div class="d-block span2">
+          <div class="d-block-tag">Во время тура</div>
+          <div class="d-block-title">Исследование страны</div>
+          <ul class="d-list">
+            <li>Инвестиционные районы Тбилиси и Батуми — для владельцев, не для туристов</li>
+            <li>Закрытые объекты и локации, недоступные без нашего сопровождения</li>
+            <li>Кахетия, Казбеги, регионы — земля и объекты с перспективой роста</li>
+            <li>Живое ощущение страны: рынки, атмосфера, темп жизни</li>
+          </ul>
+        </div>
+        <div class="d-block">
+          <div class="d-block-tag">Встречи</div>
+          <div class="d-block-title">Люди рынка</div>
+          <ul class="d-list">
+            <li>Ведущие девелоперы — прямой разговор</li>
+            <li>Юристы по сделкам и ВНЖ</li>
+            <li>Банкиры и финансовые структуры</li>
+            <li>Предприниматели, работающие здесь</li>
+          </ul>
+        </div>
+        <div class="d-block">
+          <div class="d-block-tag">После тура</div>
+          <div class="d-block-title">Дорожная карта</div>
+          <ul class="d-list">
+            <li>Подбор объектов под ваши цели</li>
+            <li>Юридическое сопровождение сделки</li>
+            <li>Пошаговый план с конкретными шагами</li>
+            <li>Менеджер на постоянной связи</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- СРАВНЕНИЕ -->
+<div class="hdiv"></div>
+<section id="compare">
+  <div class="container">
+    <div class="s-label">05 — Глобальный контекст</div>
+    <h2 class="s-title">Где в мире <em>живут и инвестируют</em></h2>
+    <p class="compare-note">Честное сравнение. У каждой юрисдикции есть своя логика — мы уважаем любой выбор. Цифры говорят сами за себя.</p>
+    <div class="country-grid">
+      <div class="cc">
+        <div class="cc-name">Таиланд</div>
+        <div class="cc-section pl">Плюсы</div>
+        <ul class="cc-list pl">
+          <li>Тёплый климат круглый год</li>
+          <li>Низкая стоимость жизни</li>
+          <li>Туристический поток</li>
+          <li>Рост рынка Пхукета</li>
+        </ul>
+        <div class="cc-section mn">Минусы</div>
+        <ul class="cc-list mn">
+          <li>Нельзя владеть землёй</li>
+          <li>ВНЖ — сложно</li>
+          <li>Языковой барьер</li>
+          <li>Политическая нестабильность</li>
+        </ul>
+      </div>
+      <div class="cc">
+        <div class="cc-name">Бали / Индонезия</div>
+        <div class="cc-section pl">Плюсы</div>
+        <ul class="cc-list pl">
+          <li>Высокая краткосрочная аренда</li>
+          <li>Digital-комьюнити</li>
+          <li>Природа и атмосфера</li>
+          <li>Туристический поток</li>
+        </ul>
+        <div class="cc-section mn">Минусы</div>
+        <ul class="cc-list mn">
+          <li>Нельзя владеть напрямую</li>
+          <li>Leasehold — юридические риски</li>
+          <li>Нет ВНЖ для инвесторов</li>
+          <li>Высокая конкуренция</li>
+        </ul>
+      </div>
+      <div class="cc">
+        <div class="cc-name">ОАЭ</div>
+        <div class="cc-section pl">Плюсы</div>
+        <ul class="cc-list pl">
+          <li>Инфраструктура мирового уровня</li>
+          <li>Нет налога на доход</li>
+          <li>Golden Visa</li>
+          <li>Международный хаб</li>
+        </ul>
+        <div class="cc-section mn">Минусы</div>
+        <ul class="cc-list mn">
+          <li>Вход от $500k</li>
+          <li>Жара 6 месяцев в году</li>
+          <li>Нет природы и органики</li>
+          <li>Усложняющийся комплаенс</li>
+        </ul>
+      </div>
+      <div class="cc">
+        <div class="cc-name">Европа</div>
+        <div class="cc-section pl">Плюсы</div>
+        <ul class="cc-list pl">
+          <li>Шенген и мобильность</li>
+          <li>Образование и медицина</li>
+          <li>Стабильный рынок</li>
+          <li>Правовая защита</li>
+        </ul>
+        <div class="cc-section mn">Минусы</div>
+        <ul class="cc-list mn">
+          <li>Налоги до 45%</li>
+          <li>ВНЖ оформляется годами</li>
+          <li>Вход от €250k</li>
+          <li>Сложный комплаенс</li>
+        </ul>
+      </div>
+      <div class="cc geo">
+        <div class="cc-badge">Выбор MEORE</div>
+        <div class="cc-name">Грузия</div>
+        <div class="cc-section pl">Плюсы</div>
+        <ul class="cc-list pl">
+          <li>Прямое владение землёй и жильём</li>
+          <li>0% налог на иностранный доход</li>
+          <li>Аренда от 5%</li>
+          <li>ВНЖ от $100k</li>
+          <li>Компания за 1 день</li>
+          <li>4 сезона — горы и море</li>
+          <li>Гостеприимство — культурный код</li>
+        </ul>
+        <div class="cc-section mn">Честно о минусах</div>
+        <ul class="cc-list mn">
+          <li>Рынок молодой — меньше премиума</li>
+          <li>Инфраструктура развивается</li>
+          <li>Английский не везде</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ctable-wrap">
+      <table class="ctable">
+        <thead>
+          <tr>
+            <th></th><th>Таиланд</th><th>Бали</th><th>ОАЭ</th><th>Европа</th><th class="hl">Грузия</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Владение землёй</td>
+            <td><span class="bad">Запрещено</span></td>
+            <td><span class="bad">Leasehold</span></td>
+            <td><span class="ok">Freehold зоны</span></td>
+            <td><span class="good">Да</span></td>
+            <td class="hl"><span class="good">Полное право</span></td>
+          </tr>
+          <tr>
+            <td>Налог на доход</td>
+            <td>До 35%</td><td>До 30%</td><td><span class="good">0%</span></td><td>До 45%</td>
+            <td class="hl"><span class="good">0%</span> иностр. · 5% аренда</td>
+          </tr>
+          <tr>
+            <td>Порог входа</td>
+            <td>От $80k</td><td>От $100k</td><td>От $500k</td><td>От €250k</td>
+            <td class="hl"><span class="good">От $50k</span></td>
+          </tr>
+          <tr>
+            <td>ВНЖ</td>
+            <td><span class="bad">Сложно</span></td>
+            <td><span class="bad">Ограничено</span></td>
+            <td><span class="ok">От $500k</span></td>
+            <td><span class="ok">Долго</span></td>
+            <td class="hl"><span class="good">От $100k</span></td>
+          </tr>
+          <tr>
+            <td>Открытие бизнеса</td>
+            <td>2–4 нед.</td><td>Месяцы</td><td>1–2 нед.</td><td>Недели–месяцы</td>
+            <td class="hl"><span class="good">1 день</span></td>
+          </tr>
+          <tr>
+            <td>Климат и природа</td>
+            <td>Тропики</td><td>Тропики</td>
+            <td><span class="bad">Жара, пустыня</span></td>
+            <td>4 сезона</td>
+            <td class="hl"><span class="good">4 сезона · Горы · Море</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- РЕЗУЛЬТАТ -->
+<div class="hdiv"></div>
+<section id="result">
+  <div class="container">
+    <div class="s-label">06 — Что вы получаете</div>
+    <h2 class="s-title">Не впечатления.<br><em>Архитектуру решений.</em></h2>
+    <div class="result-grid">
+      <div class="r-node">
+        <div class="r-num">01</div>
+        <div class="r-title">Понимание</div>
+        <p class="r-text">Чёткий ответ: подходит ли страна для ваших активов, бизнеса и семьи. Без иллюзий и давления.</p>
+      </div>
+      <div class="r-node">
+        <div class="r-num">02</div>
+        <div class="r-title">Контакты</div>
+        <p class="r-text">Прямые выходы на юристов, банкиров и девелоперов. Люди, которые уже прошли этот путь.</p>
+      </div>
+      <div class="r-node">
+        <div class="r-num">03</div>
+        <div class="r-title">Дорожная карта</div>
+        <p class="r-text">Персональный план: объекты под ваши цели, шаги, сроки, партнёры. Мы остаёмся рядом.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="hdiv"></div>
+<section id="cta">
+  <div class="container">
+    <div class="cta-inner">
+      <div class="cta-tag">Правильное место · Правильное время</div>
+      <h2 class="cta-h">Это не переезд.<br>Это <em>возвращение</em> к жизни,<br>которой давно хотелось.</h2>
+      <p class="cta-sub">Обсудим ваш личный сценарий. Потому что у каждого он свой.</p>
+      <div class="cta-btns">
+        <button class="btn-p">Записаться на тур</button>
+        <button class="btn-o">Задать вопрос</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-logo">ME<span>ORE</span></div>
+  <div class="f-copy">მეორე · Тбилиси, Грузия · 2026</div>
+</footer>
+
+<script>
+function scroll2(id){document.getElementById(id).scrollIntoView({behavior:'smooth'})}
+const burger=document.getElementById('burger'),mob=document.getElementById('mob');
+burger.addEventListener('click',()=>{
+  burger.classList.toggle('open');
+  mob.classList.toggle('open');
+  document.body.style.overflow=mob.classList.contains('open')?'hidden':'';
+});
+function closeM(){
+  burger.classList.remove('open');
+  mob.classList.remove('open');
+  document.body.style.overflow='';
+}
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').style.background=
+    window.scrollY>40?'rgba(8,8,8,0.98)':'rgba(8,8,8,0.9)';
+});
+</script>
+</body>
+</html>
